@@ -1,16 +1,27 @@
 from pathlib import Path
-import re
-import operator as op
 
 def solutions():
-    f = lambda x: int(''.join(op.itemgetter(0, -1)(re.findall(r'\d', x))))
     nums = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9'}
-    pat = '|'.join(nums.keys())
-    sub = lambda x: ''.join(nums.get(i[0], i[1]) for i in re.findall(rf'(?=({pat}))|(\d)', x))
+    digits = "123456789"
     data = Path("input.txt").read_text().splitlines()
-    sol1 = sum(f(l) for l in data)
-    sol2 = sum(f(sub(l)) for l in data)
+    sol1, sol2 = 0, 0
+    for line in data:
+        minidx, maxidx = len(line), -1; l, r = "", ""
+        for k in digits:
+            if (li := line.find(k)) != -1 and li <= minidx:
+                l, minidx = k, li
+            if (ri := line.rfind(k)) != -1 and ri >= maxidx:
+                r, maxidx = k, ri
+        sol1 += int(''.join((l, r)))
+        for k in nums:
+            if (li := line.find(k)) != -1 and li <= minidx:
+                l, minidx = k, li
+            if (ri := line.rfind(k)) != -1 and ri >= maxidx:
+                r, maxidx = k, ri
+        sol2 += int(''.join((nums.get(l, l), nums.get(r, r))))
+            
     return sol1, sol2
+
 
 if __name__ == "__main__":
     solutions()
