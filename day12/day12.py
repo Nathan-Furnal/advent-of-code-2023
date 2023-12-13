@@ -1,3 +1,8 @@
+"""
+Thanks to https://old.reddit.com/r/adventofcode/comments/18hbbxe/2023_day_12python_stepbystep_tutorial_with_bonus/
+for a non insane guide to the solution
+"""
+
 from pathlib import Path
 from functools import cache
 
