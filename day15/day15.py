@@ -37,4 +37,5 @@ def solutions():
         
     return sol1, sol2
 
-solutions()
+if __name__ == "__main__":
+    solutions()
